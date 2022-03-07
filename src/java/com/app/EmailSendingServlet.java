@@ -1,45 +1,57 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.app;
-
-import java.io.IOException;
  
-import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
  
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+/**
+ * A servlet that takes message details from user and send it as a new e-mail
+ * through an SMTP server. The e-mail message may contain attachments which
+ * are the files uploaded from client.
+ *
+ * @author www.codejava.net
+ *
+ */
+@WebServlet("/SendMailAttachServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,   // 2MB
+                maxFileSize = 1024 * 1024 * 10,         // 10MB
+                maxRequestSize = 1024 * 1024 * 50)      // 50MB
 public class EmailSendingServlet extends HttpServlet {
     private String host;
     private String port;
     private String user;
     private String pass;
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        // reads from fields
-        
+ 
+    /**
+     * handles form submission
+     */
+    protected void processRequest(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+         
+        List<File> uploadedFiles = saveUploadedFiles(request);
+         
         String recipient = request.getParameter("recipient");
         String subject = request.getParameter("subject");
         String content = request.getParameter("content");
         String usertype = request.getParameter("usertype"); 
         int userid = Integer.parseInt (request.getParameter("userid"));
         String password = request.getParameter("password");
-        
-        //extracting username from sender's email address
+ 
         String resultMessage = "";
+ 
         String senderEmail = request.getParameter("sender"); 
         int idx=0;
         String usr = "";
@@ -52,22 +64,86 @@ public class EmailSendingServlet extends HttpServlet {
         port = "587";
         pass = password;
         user=usr;
+        
         try {
-            EmailUtility.sendEmail(host, port, user, pass, recipient, subject,
-                    content);
+            EmailUtility.sendEmailWithAttachment(host, port, user, pass,
+                    recipient, subject, content, uploadedFiles);
+             
             resultMessage = "The e-mail was sent successfully";
-            
-            //request.getRequestDispatcher("dashboard.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
-            resultMessage = "There was an error: " + ex.getMessage();
+            resultMessage = "There were an error: " + ex.getMessage();
         } finally {
+            deleteUploadFiles(uploadedFiles);
             request.setAttribute("msg", resultMessage);
             request.setAttribute("userid", userid);
             request.setAttribute("usertype", usertype);
             request.getRequestDispatcher("dashboard.jsp").forward(request, response);
         }
-}
+    }
+ 
+    /**
+     * Saves files uploaded from the client and return a list of these files
+     * which will be attached to the e-mail message.
+     */
+    private List<File> saveUploadedFiles(HttpServletRequest request)
+            throws IllegalStateException, IOException, ServletException {
+        List<File> listFiles = new ArrayList<File>();
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+        Collection<Part> multiparts = request.getParts();
+        if (multiparts.size() > 0) {
+            for (Part part : request.getParts()) {
+                // creates a file to be saved
+                String fileName = extractFileName(part);
+                if (fileName == null || fileName.equals("")) {
+                    // not attachment part, continue
+                    continue;
+                }
+                 
+                File saveFile = new File(fileName);
+                System.out.println("saveFile: " + saveFile.getAbsolutePath());
+                FileOutputStream outputStream = new FileOutputStream(saveFile);
+                 
+                // saves uploaded file
+                InputStream inputStream = part.getInputStream();
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                outputStream.close();
+                inputStream.close();
+                 
+                listFiles.add(saveFile);
+            }
+        }
+        return listFiles;
+    }
+ 
+    /**
+     * Retrieves file name of a upload part from its HTTP header
+     */
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return null;
+    }
+     
+    /**
+     * Deletes all uploaded files, should be called after the e-mail was sent.
+     */
+    private void deleteUploadFiles(List<File> listFiles) {
+        if (listFiles != null && listFiles.size() > 0) {
+            for (File aFile : listFiles) {
+                aFile.delete();
+            }
+        }
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -81,7 +157,11 @@ public class EmailSendingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(EmailSendingServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -95,7 +175,11 @@ public class EmailSendingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(EmailSendingServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

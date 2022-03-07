@@ -37,7 +37,7 @@ public class LogoutUser extends HttpServlet {
         HttpSession session=request.getSession();  
         String user=(String)request.getParameter("usertype");
         request.getSession().invalidate();
-        out.print("You are successfully logged out!");  
+        out.println("You are successfully logged out!");  
         String login=(user+"-login.html");
         RequestDispatcher dispatcher = request.getRequestDispatcher(login);
         dispatcher.forward(request, response);

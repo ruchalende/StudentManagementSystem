@@ -48,6 +48,10 @@
         <servlet-name>EmailSendingServlet</servlet-name>
         <servlet-class>com.app.EmailSendingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExportToExcel</servlet-name>
+        <servlet-class>com.app.ExportToExcel</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminRegister</servlet-name>
         <url-pattern>/AdminRegister</url-pattern>
@@ -95,13 +99,32 @@
     <servlet-mapping>
         <servlet-name>EmailSendingServlet</servlet-name>
         <url-pattern>/EmailSendingServlet</url-pattern>
-    </servlet-mapping> 
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>EmailForm.jsp</welcome-file>
     </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>ExportToExcel</servlet-name>
+        <url-pattern>/ExportToExcel</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>5.2.0</version>
+    </dependency>
+    <dependency>
+     <groupId>org.apache.commons.io</groupId>
+     <artifactId>commons-io</artifactId>
+     <version>5.2.0</version>
+ </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>5.2.0</version>
+    </dependency>
 </web-app>

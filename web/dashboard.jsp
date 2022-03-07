@@ -73,21 +73,36 @@
             }
             
         </style>
+        <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div align="right" style="position: relative;">
-        <form method="post" action="LogoutUser" >
-            <input type="hidden" name="usertype" value="<%=usertype%>">
-            <input type="submit" value="Logout"  style="height:50px; width:100px;">
-        </form>
-        <form action="EmailForm.jsp" method="post">
-             <button style="text-align:right;">Send Email</button>
-             <input type="hidden" name="usertype" value="<%=usertype%>">
-             <input type="hidden" name="userid" value="<%=userid%>">
-             <input type="hidden" name="email" value="<%=email%>">
-             <input type="hidden" name="password" value="<%=password%>">
-         </form>
-         </div>
+        <table align="center" height="20px" width="100px">
+            <tr> 
+                <form action="email-form.jsp" method="post">
+                    <td style="border:none;">
+                        <button class="btn" style="width:100px; height:50px; background-color: skyblue;">
+                            <i class="fa fa-envelope fa-2x"></i>
+                        </button> 
+                    </td>
+                     <input type="hidden" name="usertype" value="<%=usertype%>">
+                     <input type="hidden" name="userid" value="<%=userid%>">
+                     <input type="hidden" name="email" value="<%=email%>">
+                     <input type="hidden" name="password" value="<%=password%>">
+                </form>
+                <td style="border:none;">
+                    <form method="post" action="LogoutUser" align="right">
+                        <input type="hidden" name="usertype" value="<%=usertype%>">
+                        <button class=logout" style="width:100px; height:50px; background-color: red;">
+                        <i class="fa fa-sign-out fa-2x"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
     <center>
 <%
     if((usertype.equals(admin)==true)){
@@ -114,7 +129,7 @@
                     <input type="hidden" name="usertype" value="<%=usertype%>">
                     <input type="hidden" name="userid" value="<%=userid%>">
                     <input type="hidden" name="recordtype" value="teachers">
-                    <input type="submit" name="submit" value="submit">
+                    <input type="submit" name="submit" value="Submit" style="background-color: #00cc00;">
         </form> <br>
         <form action="search-record.jsp" method="post">
                     Enter Email To Search A Teacher Record:&nbsp&nbsp&nbsp
@@ -122,8 +137,14 @@
                     <input type="hidden" name="usertype" value="<%=usertype%>">
                     <input type="hidden" name="userid" value="<%=userid%>">
                     <input type="hidden" name="recordtype" value="teachers">
-                    <input type="submit" name="submit" value="submit">
+                    <input type="submit" name="submit" value="Submit" style="background-color: #00cc00;">
         </form> <br>
+        <form action="ExportToExcel" method="post">
+            <input type="submit" name="submit" value="Export To Excel File"> 
+            <input type="hidden" name="usertype" value="<%=usertype%>">
+            <input type="hidden" name="userid" value="<%=userid%>">
+            <input type="hidden" name="tablename" value="teachers">
+        </form>
             <table>
             <br><label><strong>TEACHER DETAILS</strong></label><br><br>
             <tr>
@@ -131,13 +152,13 @@
             <th>TEACHER FIRST NAME</th>
                 <th>TEACHER LAST NAME</th>
                 <th>TEACHER EMAIL</th>
-                <!-- following the should be in while list of classes 
-                </% while(class_rs.next()){
+                <!-- following the should be in while list of classes -->
+                <% while(class_rs.next()){
                     year=class_rs.getInt("year");
                     branch_id=class_rs.getInt("branch_id");
                  %>
-                <th></%=year+"_"+branch_id %></th>
-                </% } %> -->
+                <th><%=branch_id+"_"+year %></th>
+                <% } %>
             </tr>
             <%
                 
@@ -162,13 +183,46 @@
                     <td> <%= teacher_last_name %> </td>
                     <td> <%= teacher_email %> </td>
                     <!-- while -->
-        <!--            </% class_rs = stmt.executeQuery(sql2);   
-                        while(class_rs.next()){ %>
-                    <td> <input type="checkbox" name="chkteacher"></td>
-                </% } %>  -->
+                <form method="post" id="checkbox-form">
+                    <% 
+                       int id=0;
+                       class_rs=stmt.executeQuery(sql2);
+                       while(class_rs.next()){ 
+                       id=class_rs.getInt("id");
+                    %>
+                    <td> <input type="checkbox" name="chkteacher" value="<%=teacher_id %>" id="<%=id %>"></td>
+                <% } %>  
                 </tr>
             <%
                 }
+            %>
+                    <button id="submit">Submit</button>
+                    <div id="result"></div>  
+                </form>
+                <script>
+                    $(document).ready(function(){  
+                        $('#checkbox-form').submit(function(e){  
+                            var classes_id = [];
+                            var teacher_id = [];
+                            $('.get_value').each(function(){  
+                                if($(this).is(":checked"))  
+                                {  
+                                    classes_id.push($(this).attr('id'));
+                                    teacher_id.push($(this).val());
+                                }  
+                            }); 
+                            $.ajax({  
+                                url:"insert-assigned-class.php",  
+                                method:"POST",  
+                                data:{classes_id:classes_id, teacher_id:teacher_id},  
+                                success:function(data){  
+                                    $('#result').html(data);  
+                                }  
+                            });  
+                        });  
+                    }); 
+                </script>
+            <%             
             ResultSet student_rs=null;
             String sql4="SELECT * FROM student;";
             student_rs = stmt.executeQuery(sql4);
@@ -181,7 +235,7 @@
                     <input type="hidden" name="usertype" value="<%=usertype%>">
                     <input type="hidden" name="userid" value="<%=userid%>">
                     <input type="hidden" name="recordtype" value="student">
-                    <input type="submit" name="submit" value="submit">
+                    <input type="submit" name="submit" value="Submit" style="background-color: #00cc00;">
                     <br><br>
                 </form>
                     <form action="search-record.jsp" method="post">
@@ -190,7 +244,7 @@
                     <input type="hidden" name="usertype" value="<%=usertype%>">
                     <input type="hidden" name="userid" value="<%=userid%>">
                     <input type="hidden" name="recordtype" value="student">
-                    <input type="submit" name="submit" value="submit">
+                    <input type="submit" name="submit" value="Submit" style="background-color: #00cc00;">
                 </form> <br>
                 <label><strong>STUDENT DETAILS</strong></label><br><br>
         <table>
@@ -241,12 +295,11 @@
         <label><h1>Hello, <%=first_name+" "+last_name %>!</h1></label><br><hr>
         <h3><label>STUDENT DETAILS</label><br><br>
         <p><br>
-        <label>ID:<%=userid%></label><br><br>
-        <label>First Name: <%=first_name%></label><br><br>
-        <label>Last Name: <%=last_name%></label><br><br>
-        <label>Email: <%=email%></label><br><br>
+        <label>ID:<%=userid%></label><br>
+        <label>First Name: <%=first_name%></label><br>
+        <label>Last Name: <%=last_name%></label><br>
+        <label>Email: <%=email%></label><br>
         <label>Class: <%=stu_class%></label><br><br></h3>
-        
         
         <%
             }  %>
@@ -279,7 +332,7 @@
             
          %>
          <h1><label>Hello, <%=first_name+" "+last_name %>!</label><br></h1><hr>
-         <h3><br><br><label>TEACHER DETAILS</label><br><br><p><br><br>
+         <h3><br><br><label>TEACHER DETAILS</label><br><br><p><br>
          <label>ID:<%=userid%></label><br><br      
         <label>First Name:<%=first_name%></label><br><br>
         <label>Last Name:<%=last_name%></label><br><br>
