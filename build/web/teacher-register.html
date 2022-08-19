@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Teacher Registration</title>
+        <link rel="stylesheet" href="user.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+    <center>
+        <header>
+            <h1>
+                Teacher Registration
+            </h1>
+        </header>
+        <hr><br><br>
+        
+        <form method="post" action="TeacherRegister">
+            <br>
+            <table style="height:300px;">
+                <tr>
+                    <td>
+                        <h3>
+                            First Name:
+                        </h3>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Enter First Name" name="fn">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <h3>
+                            Last Name:
+                        </h3>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Enter Last Name" name="ln">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <h3>
+                            Email:
+                        </h3>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Enter Email" name="email">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <h3>
+                            Password:
+                        </h3>
+                    </td>
+                    <td>
+                        <input type="password" placeholder="Enter Password" name="password">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            
+            <input type="submit" name="submit" value="Register" style="align:center;">
+            <h4>
+                Already have an account? 
+                <a href="teacher-login.html">
+                    Login!
+                </a>
+            </h4>
+        </form>
+    </body>
+</html>

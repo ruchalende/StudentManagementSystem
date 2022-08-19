@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/ImageUpload.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/admin-register.html</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/tests.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/AdminRegister.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/edit-record.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/StudentLogin.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/student-register.html</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/index.html</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/student-login.html</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/ExportToExcel.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/ImportFromExcel.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/EmailSendingServlet.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/user.css</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/admin-login.html</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/AddTest.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/UpdateRecord.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/AdminLogin.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/settings.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/StudentRegister.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/test-response.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/TeacherRegister.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/dashboard.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/search-record.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/TeacherLogin.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/add-test.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/results.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/test-page.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/email-form.jsp</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/DeleteRecord.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/insert-assigned-class.php</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/EmailUtility.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/ExportToExcelMethods.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/LogoutUser.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/ResultCalculation.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/dbconnection.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/src/java/com/app/GoToDashboard.java</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/teacher-login.html</file>
+            <file>file:/C:/Users/rucha/Documents/NetBeansProjects/RuchaLende_StudentManagementSystem/web/teacher-register.html</file>
+        </group>
+    </open-files>
+</project-private>
